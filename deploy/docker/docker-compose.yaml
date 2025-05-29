@@ -47,7 +47,7 @@ x-zookeeper-defaults: &zookeeper-defaults
   healthcheck:
     test:
       - CMD-SHELL
-      - curl -s -m 2 http://localhost:3301/commands/ruok | grep error | grep null
+      - curl -s -m 2 http://localhost:8080/commands/ruok | grep error | grep null
     interval: 30s
     timeout: 5s
     retries: 3
@@ -115,7 +115,7 @@ services:
     command:
       - --config=/root/config/prometheus.yml
     ports:
-      - "3301:3301" # signoz port
+      - "3301:8080" # signoz port
     #   - "6060:6060"     # pprof port
     volumes:
       - ../common/signoz/prometheus.yml:/root/config/prometheus.yml
@@ -136,7 +136,7 @@ services:
         - wget
         - --spider
         - -q
-        - localhost:3301/api/v1/health
+        - localhost:8080/api/v1/health
       interval: 30s
       timeout: 5s
       retries: 3
