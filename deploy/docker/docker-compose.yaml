@@ -86,7 +86,7 @@ services:
     #   - "2888:2888"
     #   - "3888:3888"
     volumes:
-      - zookeeper-1:/bitnami/zookeeper
+      - ../../data/zookeeper-1:/bitnami/zookeeper
     environment:
       - ZOO_SERVER_ID=1
       - ALLOW_ANONYMOUS_LOGIN=yes
@@ -106,7 +106,7 @@ services:
       - ../common/clickhouse/custom-function.xml:/etc/clickhouse-server/custom-function.xml
       - ../common/clickhouse/user_scripts:/var/lib/clickhouse/user_scripts/
       - ../common/clickhouse/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml
-      - clickhouse:/var/lib/clickhouse/
+      - ../../data/clickhouse:/var/lib/clickhouse/
       # - ../common/clickhouse/storage.xml:/etc/clickhouse-server/config.d/storage.xml
   signoz:
     !!merge <<: *db-depend
@@ -120,7 +120,7 @@ services:
     volumes:
       - ../common/signoz/prometheus.yml:/root/config/prometheus.yml
       - ../common/dashboards:/root/config/dashboards
-      - sqlite:/var/lib/signoz/
+      - ../../data/sqlite:/var/lib/signoz/
     environment:
       - SIGNOZ_ALERTMANAGER_PROVIDER=signoz
       - SIGNOZ_TELEMETRYSTORE_CLICKHOUSE_DSN=tcp://clickhouse:9000
@@ -190,10 +190,10 @@ services:
 networks:
   signoz-net:
     name: signoz-net
-volumes:
-  clickhouse:
-    name: signoz-clickhouse
-  sqlite:
-    name: signoz-sqlite
-  zookeeper-1:
-    name: signoz-zookeeper-1
+# volumes:
+  # clickhouse:
+  #   name: signoz-clickhouse
+  # sqlite:
+  #   name: signoz-sqlite
+  # zookeeper-1:
+  #   name: signoz-zookeeper-1
